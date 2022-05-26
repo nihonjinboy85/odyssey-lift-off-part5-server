@@ -13,7 +13,7 @@ const resolvers = {
     // get a single module by ID, for the module detail page
     module: (_, { id }, { dataSources }) => {
       return dataSources.trackAPI.getModule(id);
-    },
+    }
   },
   Mutation: {
     // increments a track's numberOfViews property
@@ -24,17 +24,17 @@ const resolvers = {
           code: 200,
           success: true,
           message: `Successfully incremented number of views for track ${id}`,
-          track,
+          track
         };
       } catch (err) {
         return {
           code: err.extensions.response.status,
           success: false,
           message: err.extensions.response.body,
-          track: null,
+          track: null
         };
       }
-    },
+    }
   },
   Track: {
     author: ({ authorId }, _, { dataSources }) => {
@@ -44,7 +44,12 @@ const resolvers = {
     modules: ({ id }, _, { dataSources }) => {
       return dataSources.trackAPI.getTrackModules(id);
     },
+
+    durationInSeconds: ({ length }) => length
   },
+  Module: {
+    durationInSeconds: ({ length }) => length
+  }
 };
 
 module.exports = resolvers;
